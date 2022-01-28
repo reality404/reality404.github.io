@@ -28,6 +28,9 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: reality404
 github_username:  reality404
+mastodon:
+- username: reality404
+  instance: icosahedron.website
 
 # Build settings
 theme: minima

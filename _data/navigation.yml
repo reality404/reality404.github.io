@@ -1,6 +1,10 @@
 main:
   - title: "Posts"
     url: /posts/
+  - title: "Beer"
+    url: /beer/
+  - title: "Demoscene"
+    url: /demoscene/
   - title: "Categories"
     url: /categories/
   - title: "Tags"

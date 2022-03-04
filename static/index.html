@@ -16,6 +16,11 @@
 
 <script>
 
+  //helper functions 
+  function per(num, per) {
+    return (num/100)*per;
+  } 
+
   const canvas = document.createElement('canvas');  
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -25,15 +30,28 @@
   let width = canvas.width, height = canvas.height;
 
   const canvasO = document.createElement('canvas');
-  canvasO.width = width<<1;
-  canvasO.height = height<<1;
+  canvasO.width = per(width,10);
+  canvasO.height = per(height,10);
   const ctxO = canvasO.getContext('2d');
 
+  console.log(per(10,width));
+
   let staticColours = ["purple","black"]
-  for (let i = 0; i < width<<1; i++) {
-    for (let j = 0; j < height<<1; j++) {
+  for (let i = 0; i < canvasO.width; i++) {
+    for (let j = 0; j < canvasO.height; j++) {
        ctxO.fillStyle = staticColours[Math.floor(Math.random()*staticColours.length)];
        ctxO.fillRect(i, j, 1, 1);
+    }
+  }
+
+  const canvasS = document.createElement('canvas');
+  canvasS.width = width<<1;
+  canvasS.height = height<<1;
+  const ctxS = canvasS.getContext('2d');
+
+  for (let i = 0; i < canvasO.width; i++) {
+    for (let j = 0; j < canvasO.height; j++) {
+      ctxS.drawImage(canvasO, canvasO.width*i, canvasO.height*j);  
     }
   }
 
@@ -41,7 +59,7 @@
     let x = (width * Math.random())|0;                    
     let y = (height * Math.random())|0;
   
-     ctx.drawImage(canvasO, -x, -y);                 
+     ctx.drawImage(canvasS, -x, -y);                 
     requestAnimationFrame(loop)
   })();
 

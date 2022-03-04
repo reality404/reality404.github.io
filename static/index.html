@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>A Static HTML Page!</title>
 <style>
 
   body{
@@ -37,8 +38,8 @@
   }
 
   (function loop() {
-    var x = (width * Math.random())|0;                    
-    var y = (height * Math.random())|0;
+    let x = (width * Math.random())|0;                    
+    let y = (height * Math.random())|0;
   
      ctx.drawImage(canvasO, -x, -y);                 
     requestAnimationFrame(loop)

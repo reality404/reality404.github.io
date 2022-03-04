@@ -26,28 +26,29 @@
   const canvasO = document.createElement('canvas');
   canvasO.width = width<<1;
   canvasO.height = height<<1;
-  const ctxO = canvasO.getContext('2d' ,{alpha: false});
+  const ctxO = canvasO.getContext('2d');
 
   //Static 
   let imageData = ctxO.createImageData(width<<1, height<<1);
   let buffer32 = new Uint32Array(imageData.data.buffer); 
 
-  //Lets make some noise
-  function noise(context) {
-    let len = buffer32.length - 1;
-    while(len--) buffer32[len] = Math.random() < 0.5 ? 0 : -1>>0;
-    context.putImageData(imageData, 0, 0);
+  let staticColours = ["yellow","white","purple","black"]
+  for (let i = 0; i < width<<1; i++) {
+    for (let j = 0; j < height<<1; j++) {
+       ctxO.fillStyle = staticColours[Math.floor(Math.random()*staticColours.length)];
+       ctxO.fillRect(i, j, 1, 1);
+    }
   }
-  noise(ctxO);
 
-  //Lets loop 
+
   (function loop() {
-    let x = (width * Math.random())|0;                    
-    let y = (height * Math.random())|0;
+    var x = (width * Math.random())|0;                    
+    var y = (height * Math.random())|0;
   
      ctx.drawImage(canvasO, -x, -y);                 
     requestAnimationFrame(loop)
   })();
+
 
 </script>
 </body>

@@ -28,10 +28,6 @@
   canvasO.height = height<<1;
   const ctxO = canvasO.getContext('2d');
 
-  //Static 
-  let imageData = ctxO.createImageData(width<<1, height<<1);
-  let buffer32 = new Uint32Array(imageData.data.buffer); 
-
   let staticColours = ["purple","black"]
   for (let i = 0; i < width<<1; i++) {
     for (let j = 0; j < height<<1; j++) {
@@ -40,7 +36,6 @@
     }
   }
 
-
   (function loop() {
     var x = (width * Math.random())|0;                    
     var y = (height * Math.random())|0;
@@ -48,7 +43,6 @@
      ctx.drawImage(canvasO, -x, -y);                 
     requestAnimationFrame(loop)
   })();
-
 
 </script>
 </body>

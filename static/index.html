@@ -35,29 +35,26 @@
   const ctxO = canvasO.getContext('2d');
 
   let staticColours = ["purple","black"]
-  for (let i = 0; i < canvasO.width; i++) {
-    for (let j = 0; j < canvasO.height; j++) {
+
+  function static(){
+    for (let i = 0; i < canvasO.width; i++) {
+      for (let j = 0; j < canvasO.height; j++) {
        ctxO.fillStyle = staticColours[Math.floor(Math.random()*staticColours.length)];
        ctxO.fillRect(i, j, 1, 1);
+      }
     }
   }
-
-  const canvasS = document.createElement('canvas');
-  canvasS.width = width<<1;
-  canvasS.height = height<<1;
-  const ctxS = canvasS.getContext('2d');
-
-  for (let i = 0; i < canvasO.width; i++) {
-    for (let j = 0; j < canvasO.height; j++) {
-      ctxS.drawImage(canvasO, canvasO.width*i, canvasO.height*j);  
-    }
-  }
+  static();
 
   (function loop() {
-    let x = (width * Math.random())|0;                    
-    let y = (height * Math.random())|0;
-  
-     ctx.drawImage(canvasS, -x, -y);                 
+
+    static();
+    
+    for (let i = 0; i < canvasO.width; i++) {
+    for (let j = 0; j < canvasO.height; j++) {
+      ctx.drawImage(canvasO, canvasO.width*i, canvasO.height*j);  
+    }
+  }              
     requestAnimationFrame(loop)
   })();
 

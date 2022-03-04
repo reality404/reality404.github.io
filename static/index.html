@@ -32,7 +32,7 @@
   let imageData = ctxO.createImageData(width<<1, height<<1);
   let buffer32 = new Uint32Array(imageData.data.buffer); 
 
-  let staticColours = ["yellow","white","purple","black"]
+  let staticColours = ["purple","black"]
   for (let i = 0; i < width<<1; i++) {
     for (let j = 0; j < height<<1; j++) {
        ctxO.fillStyle = staticColours[Math.floor(Math.random()*staticColours.length)];

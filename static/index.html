@@ -50,10 +50,10 @@
     static();
 
     for (let i = 0; i < canvasO.width; i++) {
-    for (let j = 0; j < canvasO.height; j++) {
-      ctx.drawImage(canvasO, canvasO.width*i, canvasO.height*j);  
-    }
-  }              
+      for (let j = 0; j < canvasO.height; j++) {
+        ctx.drawImage(canvasO, canvasO.width*i, canvasO.height*j);  
+      }  
+    }              
     requestAnimationFrame(loop)
   })();
 

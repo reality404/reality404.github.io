@@ -85,7 +85,7 @@ footer:
       url: "https://github.com/reality404"
     - label: "Mastodon"
       icon: "fab fa-fw fa-mastodon"
-      url: "https://icosahedron.website/@reality404"
+      url: "https://tech.lgbt/@reality404"
 
 defaults:
   # _posts

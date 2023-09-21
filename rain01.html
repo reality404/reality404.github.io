@@ -48,19 +48,7 @@
       const animation0 = div0.animate(keyframes, animationOptions);
       const animation1 = div1.animate(keyframes, animationOptions);
 
-      animation0.onfinish = () => {
-        console.log("Animation 0 finished");
-        animation0.cancel(); // Cancel the current animation
-        div0.style.transform = 'translateY(0px)'; // Reset the initial position
-        animation0 = div0.animate(keyframes, animationOptions); // Start animation0 again
-      };
 
-      animation1.onfinish = () => {
-        console.log("Animation 1 finished");
-        animation1.cancel(); // Cancel the current animation
-        div1.style.transform = 'translateY(0px)'; // Reset the initial position
-        animation1 = div1.animate(keyframes, animationOptions); // Start animation0 again
-      };
 
     </script>
   </body>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	  <title>rain02</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: purple;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script> 
+
+let divHeight = window.innerHeight;
+let div0 = document.createElement("div");
+div0.style.position = 'absolute';
+div0.style.top = '0px'; // Start div0 at the top
+div0.style.width = "100px";
+div0.style.height = `${divHeight}px`;
+div0.style.background = "red";
+document.body.appendChild(div0);
+
+let div1 = document.createElement("div");
+div1.style.position = 'absolute';
+div1.style.top = `-${divHeight}px`; // Start div1 just above the viewport
+div1.style.width = "100px";
+div1.style.height = `${divHeight}px`;
+div1.style.background = "green";
+document.body.appendChild(div1);
+
+const animationOptions = {
+  duration: 2000, // Duration of the animation in milliseconds
+  iterations: 1, // Loop the animation infinitely
+  //iterations: Infinity,
+  easing: "linear", // Linear easing for a consistent raindrop speed
+};
+
+const keyframes = [
+  { transform: `translateY(0px)` },
+  { transform: `translateY(${divHeight}px)` },
+];
+
+let animation0 = div0.animate(keyframes, animationOptions);
+let animation1 = div1.animate(keyframes, animationOptions);
+
+let toggle = true;
+
+animation0.onfinish = () => {
+  console.log("Animation 0 finished");
+  animation0.cancel(); // Cancel the current animation
+
+  if (toggle === true) {
+    div0.style.top = `-${divHeight}px`; 
+  } else {
+    div0.style.top = '0px';
+  }
+
+  animation0.play(); // Start animation0 again
+
+};
+
+animation1.onfinish = () => {
+  console.log("Animation 1 finished");
+  animation1.cancel(); // Cancel the current animation
+
+  if (toggle === true) {
+    div1.style.top = '0px';
+    toggle = false;
+  } else {
+    div1.style.top = `-${divHeight}px`; 
+    toggle = true;
+  }
+
+  animation1.play(); // Start animation1 again
+};
+
+
+
+
+    </script>
+  </body>
+</html>

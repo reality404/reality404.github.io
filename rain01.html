@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	  <title>Reality</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: purple;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script> 
+    const addElement = (options) => {
+        const elementType = options.element || 'div';
+
+        // Create a new element of the specified type
+        const newElement = document.createElement(elementType);
+
+        // Helper function to conditionally set properties
+        const setProperty = (property, value) => {
+            if (value) {
+                newElement[property] = value;
+            }
+        };
+
+        // Set class and ID if provided
+        setProperty('className', options.class);
+        setProperty('id', options.id);
+
+    // Determine the parent element
+    const parentElement = options.parent || document.body;
+
+    // Append the new element to the specified parent element
+    parentElement.appendChild(newElement);
+
+
+        // Return the newly created element
+        return newElement;
+    };
+
+    // Call the function to add elements with options and get references to them
+    //const newDivWithClassAndId = addElement({ element: 'div', class: 'custom-class', id: 'custom-id' });
+    //const newDivWithId = addElement({parent:newDivWithClassAndId, element: 'div', id: 'another-custom-id' });
+
+
+    //const container = addElement({parent:document.body, element: 'div', id: 'container'});
+
+    const style = document.querySelector('style');
+
+
+    const columns = 50;
+    console.log(window.innerWidth)
+
+    const colouredDivCSS = `
+            .coloured-div {
+                width: `+((window.innerWidth/columns))+`px;
+                font-size: `+((window.innerWidth/columns))+`px;
+                line-height: `+((window.innerWidth/columns))+`px;
+                display: inline-block;
+                /*margin: 5px;*/
+                vertical-align:top;
+            }
+        `;
+
+    //style.textContent += colouredDivCSS;
+
+    function getRandomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+const getRandomEmojis = (emojiArray, numberOfEmojis) => {
+  let result = '';
+  for (let i = 0; i < numberOfEmojis; i++) {
+    const randomIndex = Math.floor(Math.random() * emojiArray.length);
+    result += emojiArray[randomIndex];
+  }
+  return result;
+};
+
+const emojis = ["🐱", "😺", "😸", "😻", "😽", "🙀", "😿", "😾", "🐈", "🦁", "🐯", "🐅", "🐆", "🐾", "😹", "😼"]; 
+  
+function createImageDataUrl (emoji,size) {
+  const text = emoji;
+  const textSize = size;
+
+  // Set the font size and font family
+  const fontFamily = "Twemoji Mozilla";
+  const fontSize = `${textSize}px ${fontFamily}`;
+
+  // Create a canvas with dimensions based on textSize
+  const canvas = document.createElement('canvas');
+  canvas.width = textSize;
+  canvas.height = textSize;
+
+  const context = canvas.getContext('2d');
+  context.font = fontSize;
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+
+  // Fill the text on the canvas
+  context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  return canvas.toDataURL();
+}
+
+const imgData = [];
+
+// Generate data URLs for each emoji and store them in the imgData array
+for (let i = 0; i < emojis.length; i++) {
+  imgData.push(createImageDataUrl(emojis[i],100));
+}
+
+  const appendEmoji = (append) => {
+    const randomIndex = Math.floor(Math.random() * emojis.length);
+    const img = new Image();
+    img.src = imgData[randomIndex];
+    img.id = 'emoji-image'; // Add an 'id' attribute
+    append.appendChild(img);
+    //img.style.position = 'absolute';
+    //img.style.top = "0px";
+    return img;
+  }
+
+let divHeight = window.innerHeight;
+let div0 = document.createElement("div");
+div0.style.position = 'absolute';
+div0.style.top = '0px'; // Start div0 at the top
+div0.style.width = "100px";
+div0.style.height = `${divHeight}px`;
+div0.style.background = "red";
+document.body.appendChild(div0);
+
+let div1 = document.createElement("div");
+div1.style.position = 'absolute';
+div1.style.top = `-${divHeight}px`; // Start div1 just above the viewport
+div1.style.width = "100px";
+div1.style.height = `${divHeight}px`;
+div1.style.background = "green";
+document.body.appendChild(div1);
+
+const animationOptions = {
+  duration: 2000, // Duration of the animation in milliseconds
+  //iterations: 1, // Loop the animation infinitely
+  iterations: Infinity,
+  easing: "linear", // Linear easing for a consistent raindrop speed
+};
+
+const keyframes = [
+  { transform: `translateY(0px)` },
+  { transform: `translateY(${divHeight}px)` },
+];
+
+const animation0 = div0.animate(keyframes, animationOptions);
+const animation1 = div1.animate(keyframes, animationOptions);
+
+animation0.onfinish = () => {
+  console.log("Animation 0 finished");
+  animation0.cancel(); // Cancel the current animation
+  div0.style.transform = 'translateY(0px)'; // Reset the initial position
+  animation0 = div0.animate(keyframes, animationOptions); // Start animation0 again
+};
+
+animation1.onfinish = () => {
+  console.log("Animation 1 finished");
+  animation1.cancel(); // Cancel the current animation
+  div1.style.transform = 'translateY(0px)'; // Reset the initial position
+  animation1 = div1.animate(keyframes, animationOptions); // Start animation0 again
+};
+
+/*
+
+let step0 = 0; // Initialize step for div0
+let step1 = -divHeight; // Initialize step for div1
+
+function divRain() {
+  step0 += 5;
+  step1 += 5;
+
+  // When div0 reaches the bottom, jump it back to the top position
+  if (step0 > window.innerHeight) {
+    step0 = -divHeight;
+    div0.replaceChildren();
+    for (let index = 0; index < ((divHeight/100)-1); index++) {
+      appendEmoji(div0);
+    }
+  }
+
+  if (step1 > window.innerHeight) {
+    step1 = -divHeight;
+    div1.replaceChildren();
+    for (let index = 0; index < ((divHeight/100)-1); index++) {
+      appendEmoji(div1);
+    }
+  }
+
+  div0.style.top = `${step0}px`;
+  div1.style.top = `${step1}px`;
+
+  requestAnimationFrame(divRain);
+}
+
+// Start the animation
+//divRain();
+
+*/
+
+
+    </script>
+  </body>
+</html>

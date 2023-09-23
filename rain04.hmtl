@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain v0.04</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const rain = (setting) => { //left,colour0,colour1,duration
+        const box = document.createElement("div");
+        box.id = "box";
+        box.style.position = "absolute";
+        box.style.top = "-100vh";
+        box.style.width = "100px";
+        box.style.height = setting.height;
+        box.style.left = setting.left;
+        box.style.backgroundColor = setting.colour0;
+        document.body.appendChild(box);
+
+        const boxGreen = document.createElement("div");
+        boxGreen.id = "boxGreen";
+        boxGreen.style.position = "absolute";
+        boxGreen.style.top = "-100vh";
+        boxGreen.style.width = "100px";
+        boxGreen.style.height = setting.height;
+        boxGreen.style.left = setting.left;
+        boxGreen.style.backgroundColor = setting.colour1;
+        document.body.appendChild(boxGreen);
+
+        const animation0 = new Animation(
+          new KeyframeEffect(box, [
+          { top: `-${setting.distance}` },
+          { top: "0" },
+          ], 
+          {
+           duration: setting.duration,
+          }),
+          document.timeline
+        );
+
+        const animation1 = new Animation(
+          new KeyframeEffect(box, [
+          { top: "0" },
+          { top: setting.distance },
+          ], 
+          {
+           duration: setting.duration,
+          }),
+          document.timeline
+        );
+
+        const animationGreen0 = new Animation(
+          new KeyframeEffect(boxGreen, [
+          { top: `-${setting.distance}` },
+          { top: "0" },
+          ], 
+          {
+           duration: setting.duration,
+          }),
+          document.timeline
+        );
+
+        const animationGreen1 = new Animation(
+          new KeyframeEffect(boxGreen, [
+          { top: "0" },
+          { top: setting.distance },
+          ], 
+          {
+           duration: setting.duration,
+          }),
+          document.timeline
+        );
+
+        animation0.play();
+
+        animation0.onfinish = () => {
+          console.log("Animation finished");
+          animation1.play();
+          animationGreen0.play();
+        };
+
+        animationGreen0.onfinish = () => {
+          console.log("Animation finished");
+          animationGreen1.play()
+          animation0.play()
+        };
+      }
+      rain({
+        height: "100vh", 
+        left: "0px", 
+        colour0: "red",
+        colour1:"green", 
+        duration: 2000,
+        distance: "100vh"
+      });
+      rain({
+        height: "100vh", 
+        left: "100px",
+        colour0: "pink",
+        colour1: "violet",
+        duration: 3000,
+        distance: "100vh"
+      });
+      rain({
+        height: "50vh", 
+        left: "200px",
+        colour0: "red",
+        colour1: "green",
+        duration: 2000,
+        distance: "50vh"
+      });
+      
+    });
+</script>
+</body>
+</html>

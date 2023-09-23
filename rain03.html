@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain v0.03</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const box = document.createElement("div");
+        box.id = "box";
+        box.style.position = "absolute";
+        box.style.top = "-100vh";
+        box.style.width = "100px";
+        box.style.height = "100vh";
+        box.style.backgroundColor = "red";
+        document.body.appendChild(box);
+
+        const boxGreen = document.createElement("div");
+        boxGreen.id = "boxGreen";
+        boxGreen.style.position = "absolute";
+        boxGreen.style.top = "-100vh";
+        boxGreen.style.width = "100px";
+        boxGreen.style.height = "100vh";
+        boxGreen.style.backgroundColor = "green";
+        document.body.appendChild(boxGreen);
+
+        const animation0 = new Animation(
+          new KeyframeEffect(box, [
+          { top: "-100vh" },
+          { top: "0" },
+          ], 
+          {
+           duration: 2000,
+          }),
+          document.timeline
+        );
+
+        const animation1 = new Animation(
+          new KeyframeEffect(box, [
+          { top: "0" },
+          { top: "100vh" },
+          ], 
+          {
+           duration: 2000,
+          }),
+          document.timeline
+        );
+
+        const animationGreen0 = new Animation(
+          new KeyframeEffect(boxGreen, [
+          { top: "-100vh" },
+          { top: "0" },
+          ], 
+          {
+           duration: 2000,
+          }),
+          document.timeline
+        );
+
+        const animationGreen1 = new Animation(
+          new KeyframeEffect(boxGreen, [
+          { top: "0" },
+          { top: "100vh" },
+          ], 
+          {
+           duration: 2000,
+          }),
+          document.timeline
+        );
+
+        animation0.play();
+
+        animation0.onfinish = () => {
+          console.log("Animation finished");
+          animation1.play();
+          animationGreen0.play();
+        };
+
+        animationGreen0.onfinish = () => {
+          console.log("Animation finished");
+          animationGreen1.play()
+          animation0.play()
+        };
+    });
+</script>
+</body>
+</html>
